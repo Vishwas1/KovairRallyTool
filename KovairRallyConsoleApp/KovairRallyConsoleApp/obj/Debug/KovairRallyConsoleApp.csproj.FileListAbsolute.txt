@@ -1,1 +1,8 @@
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\bin\Debug\KovairRallyConsoleApp.exe.config
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\bin\Debug\KovairRallyConsoleApp.exe
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\bin\Debug\KovairRallyConsoleApp.pdb
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\bin\Debug\Rally.RestApi.dll
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\bin\Debug\Rally.RestApi.xml
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\obj\Debug\KovairRallyConsoleApp.csprojResolveAssemblyReference.cache
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\obj\Debug\KovairRallyConsoleApp.exe
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyConsoleApp\KovairRallyConsoleApp\obj\Debug\KovairRallyConsoleApp.pdb
