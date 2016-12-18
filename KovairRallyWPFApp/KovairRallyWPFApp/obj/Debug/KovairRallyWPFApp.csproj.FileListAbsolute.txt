@@ -11,3 +11,4 @@ C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyW
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.csproj.GenerateResource.Cache
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.exe
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.pdb
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\Rally.RestApi.dll

@@ -33,7 +33,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Rally.RestApi">
+      <HintPath>library\Rally.RestApi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -97,6 +103,27 @@
     <Resource Include="config.png" />
     <Resource Include="data.jpg" />
     <Resource Include="Rallydev-Integration.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="blank.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bx_loader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="loading.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

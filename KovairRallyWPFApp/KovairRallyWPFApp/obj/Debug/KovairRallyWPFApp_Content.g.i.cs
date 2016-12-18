@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("config.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("rallydev-integration.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icon1.ico")]
 
 

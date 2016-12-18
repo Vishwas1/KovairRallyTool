@@ -65,9 +65,12 @@ namespace KovairRallyConsoleApp
 
                 //var r = tasks.Select(task => task.Result).ToList();
 
-                Task<int>[] taskArray = { Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[0])),
-                                     Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[1])), 
-                                     Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[2])) };
+                //Task<int>[] taskArray = { Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[0])),
+                //                     Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[1])), 
+                //                     Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[2])) };
+
+
+                Task<int>[] taskArray = { Task<int>.Factory.StartNew(() => GetArtifactCount("28249260968", artifacts[1])) };
                 Task.WaitAll(taskArray);
                 var results = new Int32[taskArray.Length];
 
@@ -81,8 +84,8 @@ namespace KovairRallyConsoleApp
 
         private static bool DoConnection()
         {
-            string username = "ss908n@att.com ";
-            string password = "kovair@att2016";
+            string username = "vb807t@att.com ";
+            string password = "KovairRally1@";
             string serverUrl = "https://rally1.rallydev.com/";
             // Initialize the REST API. You can specify a web service version if needed in the constructor.
             restApi = new RallyRestApi();
@@ -95,8 +98,12 @@ namespace KovairRallyConsoleApp
             {
                 request = new Request(artifactName);
                 request.Project = String.Format("/project/{0}", projectId);
-                request.Fetch =  new List<string>() { "FormattedID", "Name" };
-                //var query = restApi.Query(request);
+                request.Fetch =  new List<string>() { "FormattedID", "Name" ,"Project"};
+                var query = restApi.Query(request).Results.FirstOrDefault();
+                var project = query["Project"];
+                var projectname = project["Name"];
+                Console.WriteLine("Name of project is::  {0}", projectname);
+
                 return restApi.Query(request) != null ? restApi.Query(request).TotalResultCount : 0;
             }
             else
