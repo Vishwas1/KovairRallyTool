@@ -39,12 +39,12 @@
                             <ColumnDefinition Width="95.2"/>
                             <ColumnDefinition Width="Auto" MinWidth="324"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label  Content="Rally URL:" HorizontalContentAlignment="Right" Margin="9,10,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="79" Grid.Row="0" Grid.Column="0" />
-                        <Label  Content="User Name:" HorizontalContentAlignment="Right" Margin="9,10.2,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="79" Grid.Row="1" Grid.Column="0" />
-                        <Label  Content="Password:" HorizontalContentAlignment="Right" Margin="9,10.4,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="79" Grid.Row="2" Grid.Column="0" />
+                        <Label  Content="Rally URL" HorizontalContentAlignment="Right" Margin="9,10,0,0" 
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="79" Grid.Row="0" Grid.Column="0" FontWeight="Bold" />
+                        <Label  Content="User Name" HorizontalContentAlignment="Right" Margin="9,10.2,0,0" 
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="79" Grid.Row="1" Grid.Column="0" FontWeight="Bold" />
+                        <Label  Content="Password" HorizontalContentAlignment="Right" Margin="9,10.4,0,0" 
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="79" Grid.Row="2" Grid.Column="0" FontWeight="Bold" />
                        
                         <TextBox x:Name="urlTxt" HorizontalAlignment="Left" Height="23"
                                  Margin="9,10,0,0" Width="297" Foreground="Gray"
@@ -84,16 +84,16 @@
             </TabItem.HeaderTemplate>
             <TabItem.Content>
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="0,0,2.4,0.4">
-                    <Grid Height="348" Width="420">
+                    <Grid Height="359" Width="420">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="28.8"></RowDefinition>
                             <RowDefinition Height="76.8"></RowDefinition>
-                            <RowDefinition Height="40.8"></RowDefinition>
-                            <RowDefinition Height="45.6"></RowDefinition>
+                           <RowDefinition Height="219.2"></RowDefinition>
+                             <!--<RowDefinition Height="45.6"></RowDefinition>
                             <RowDefinition Height="41.6"></RowDefinition>
                             <RowDefinition Height="44.8"></RowDefinition>
-                            <RowDefinition Height="35.2"></RowDefinition>
-                            <RowDefinition Height="Auto" MinHeight="80">
+                            <RowDefinition Height="46.4"></RowDefinition>-->
+                            <RowDefinition Height="Auto" MinHeight="36.8">
                                 
                             </RowDefinition>
                             <!--<RowDefinition Height="50.4" ></RowDefinition>
@@ -108,38 +108,100 @@
                                HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="94" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" FontWeight="Bold" />
                         
                         <TextBox x:Name="prjctidTxt" HorizontalAlignment="Left" Height="23"
-                                 Margin="9.6,7,0,0" Width="284"
+                                 Margin="9.6,7,0,0" Width="302"
         	                    TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Foreground="Gray" Grid.RowSpan="2"/>
                        
                         <Button x:Name="getallBtn" Background="#FFFC3118" Content="Get All Artifacts Count" Grid.Column="1" HorizontalAlignment="Left" 
-                                 VerticalAlignment="Top" Width="152" Height="28" Margin="141.6,10.2,0,0" Grid.Row="1" Click="getallBtn_Click" BorderBrush="#FF171515" Foreground="White"/>
-                        
-                         <Label Content="User Story:" HorizontalContentAlignment="Right" Margin="9,9.4,0,1.4" 
-                               HorizontalAlignment="Left" Width="88" Grid.Row="2" Grid.Column="0" />
-                         <Label Content="Theme:" HorizontalContentAlignment="Right" Margin="9,12.6,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="88" Grid.Row="3" Grid.Column="0" />
-                         <Label Content="Initiative:" HorizontalContentAlignment="Right" Margin="9,11,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Width="88" Grid.Row="4" Grid.Column="0" />
-                         <Label Content="Features:" HorizontalContentAlignment="Right" Margin="9,10.4,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="88" Grid.Row="5" Grid.Column="0" />
-                         <Label Content="Task:" HorizontalContentAlignment="Right" Margin="9,6.6,0,0" 
-                               HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="88" Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" />
-                        
-                         <Label x:Name="storyLbl" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,9.4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="32" Width="106" BorderThickness="1"  FontSize="13" FontFamily="Comic Sans MS"  BorderBrush="#FFCFC8C8" Grid.RowSpan="2"/>
-                         <Button x:Name="getStoryBtn" Background="Silver" Content="Get Story Count" Grid.Column="1" HorizontalAlignment="Left" Margin="141.6,9.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="152" Height="22" Click="getStoryBtn_Click"/>
-                         <Label x:Name="themeLbl" FontSize="13" FontFamily="Comic Sans MS" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,12.6,0,0" Grid.Row="3" VerticalAlignment="Top" Height="34" Width="106" BorderThickness="1" BorderBrush="#FFCFC8C8" Grid.RowSpan="2"/>
-                         <Button x:Name="getThemeBtn" Background="Silver" Content="Get Theme Count" Grid.Column="1" HorizontalAlignment="Left" Margin="141.6,12.6,0,0" Grid.Row="3" VerticalAlignment="Top" Width="152" Height="24" Click="getThemeBtn_Click"/>
-                         <Label x:Name="initiativeLbl" FontSize="13" FontFamily="Comic Sans MS" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="31" Width="106" BorderThickness="1" BorderBrush="#FFCFC8C8" Grid.RowSpan="2"/>
-                         <Button x:Name="getInitiativeBtn" Background="Silver" Content="Get Initiative Count" Grid.Column="1" HorizontalAlignment="Left" Margin="141.6,11,0,0" Grid.Row="4" VerticalAlignment="Top" Width="152" Height="23" Click="getInitiativeBtn_Click"/>
-                         <Label x:Name="featuresLbl" FontSize="13" FontFamily="Comic Sans MS" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10.4,0,0" Grid.Row="5" VerticalAlignment="Top" Height="31" Width="106" BorderThickness="1" BorderBrush="#FFCFC8C8"/>
-                         <Button x:Name="getFeaturesBtn" Background="Silver" Content="Get Feature Count" Grid.Column="1" HorizontalAlignment="Left" Margin="141.6,10.4,0,0" Grid.Row="5" VerticalAlignment="Top" Width="152" Height="25" Click="getFeaturesBtn_Click"/>
-                         <Label x:Name="taskLbl" FontSize="13" FontFamily="Comic Sans MS" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,6.6,0,0" Grid.Row="6" VerticalAlignment="Top" Width="106" Height="31" BorderThickness="1" BorderBrush="#FFCFC8C8" Grid.RowSpan="2"/>
-                         <Button x:Name="getTaskBtn" Background="Silver" Content="Get Task Count" Grid.Column="1" HorizontalAlignment="Left" Margin="141.6,6.6,0,0" Grid.Row="6" VerticalAlignment="Top" Width="152" Height="23" Click="getTaskBtn_Click"/>
+                                 VerticalAlignment="Top" Width="170" Height="28" Margin="141.6,10.2,0,0" Grid.Row="1" Click="getallBtn_Click" BorderBrush="#FF171515" Foreground="White"/>
                          <Button x:Name="clrallBtn" Content="Clear All" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Height="28" Click="Button_Click_1"/>
-                         <Label x:Name="validatnLbl" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="8.6,9.4,0,0" Grid.Row="7" VerticalAlignment="Top" Width="284" Background="#FFEED6F3" Foreground="#FFF61111"  Height="24" />
-                         <Label Content="Label" Grid.Column="1" FontSize="10" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="9.6,43.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="284"  BorderThickness="1" BorderBrush="#FFCFC8C8" Height="25"/>
+                         <Label x:Name="validatnLbl" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="8.6,0.2,0,0" Grid.Row="3" VerticalAlignment="Top" Width="284" Background="#FFEED6F3" Foreground="#FFF61111"  Height="27" Visibility="Hidden" />
+                         <Label x:Name="prjctName" Content="" Grid.Column="1" FontSize="10" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="9.6,43.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="302"  BorderThickness="1" BorderBrush="#FFCFC8C8" Height="25"/>
                          <Label Content="Rally Project" HorizontalAlignment="Left" Margin="10,43.2,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="87" FontWeight="Bold"/>
-                         
+                         <GroupBox  HorizontalAlignment="Left" Margin="10,10.4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="204" Width="400" Grid.ColumnSpan="2">
+                         	<GroupBox.Header>
+                                <TextBlock Text="Artifacts Count" FontWeight="Bold"/>
+                            </GroupBox.Header>
+                            <StackPanel HorizontalAlignment="Left" Height="181.6" VerticalAlignment="Top" Width="387.2">                             
+                                <Grid Height="181" Margin="0,0,0.2,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"  ></RowDefinition>
+                                            <RowDefinition Height="auto" ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" MinWidth="354.4"/>
+                                            <!--<ColumnDefinition Width="auto" MinWidth="20"/>-->
+                                        </Grid.ColumnDefinitions>
+                                        <Expander Name="portExpander" Header="Portfolio Items (Theme/Initiative/Feature)"  Expanded="toggleExpanderCollasp" Grid.Row="0" Grid.Column="0" IsExpanded="True" >
+                         			        <Grid Background="WhiteSmoke" Height="115" Margin="20,0,-0.4,0" Width="364">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="130"/>
+                                                    <ColumnDefinition Width="130"/>
+                                                    <ColumnDefinition Width="130"/>
+                                                </Grid.ColumnDefinitions>  
+                                                   <GroupBox  Header="Theme" HorizontalAlignment="Left"  Margin="10,0,0,-46.2" VerticalAlignment="Top" Height="95" Width="99" >
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getThemeBtn" Content="Get Theme" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="86" Click="getThemeBtn_Click"/>
+                                                            <Label x:Name="themeLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" Margin="0,0,0.4,0" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                    <GroupBox Header="Initiative" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="95" Width="99"  Grid.Row="0" Grid.Column="1">
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button   x:Name="getInitiativeBtn" Content="Get Initiative" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="86" Click="getInitiativeBtn_Click"/>
+                                                            <Label x:Name="initiativeLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" Margin="0,0,0.4,0" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                    <GroupBox Header="Feature" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="95" Width="99"  Grid.Row="0" Grid.Column="2">
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getFeaturesBtn" Content="Get Feature" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="86" Click="getFeaturesBtn_Click"/>
+                                                            <Label x:Name="featuresLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" Margin="0,0,0.4,0" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                             </Grid>
+                         		         </Expander>
+                         		        <Expander Name="delivExpander" Header="Delivery Items (Story/Task/Defect/Test Case/)" Expanded="toggleExpanderCollasp" Grid.Column="0"  Grid.Row="1" IsExpanded="false">
+                         			        <Grid Background="WhiteSmoke" Height="115"  Margin="20,0,-0.4,0" Width="364">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>  
+                                                    <GroupBox Header="Story" HorizontalAlignment="Left" VerticalAlignment="Top" Height="95" Width="85" Grid.Row="0" Grid.Column="0">
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getStoryBtn" Content="Get Story" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="72" Click="getStoryBtn_Click"/>
+                                                            <Label x:Name="storyLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                    <GroupBox Header="Task" HorizontalAlignment="Left" VerticalAlignment="Top" Height="95" Width="85" Grid.Row="0" Grid.Column="1" >
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getTaskBtn"  Content="Get Task" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="72" Click="getTaskBtn_Click"/>
+                                                            <Label x:Name="taskLbl"  Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                <GroupBox Header="Defect" HorizontalAlignment="Left" VerticalAlignment="Top" Height="95" Width="85" Grid.Row="0" Grid.Column="2">
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getDefectBtn" Content="Get Defect" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="72" Click="getDefectBtn_Click"/>
+                                                            <Label x:Name="defectLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                <GroupBox Header="Test Case" HorizontalAlignment="Left" VerticalAlignment="Top" Height="95" Width="93" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="90.2,0,-7.2,0">
+                                                        <StackPanel Margin="0,0,0.2,0.8">
+                                                            <Button x:Name="getTCaseBtn" Content="Get Test Case" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="80" Click="getTCaseBtn_Click"/>
+                                                            <Label x:Name="tcaseLbl" Content="" BorderThickness="1" BorderBrush="#FFCFC8C8" Height="36" RenderTransformOrigin="-0.292,1.518" FontWeight="Bold"/>
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                            </Grid>
+                         		        </Expander>        
+                                        <!--<ScrollBar Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="18.6,0,34.8,-22.6" Width="Auto"/>-->   
+                                </Grid>
+                         	</StackPanel>
+                         </GroupBox> 
                     </Grid>
                 </TextBlock>
             </TabItem.Content>

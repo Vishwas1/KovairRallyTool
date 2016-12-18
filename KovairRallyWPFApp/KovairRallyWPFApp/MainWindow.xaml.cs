@@ -32,14 +32,30 @@ namespace KovairRallyWPFApp
         static string username = string.Empty;
         static string password = string.Empty;
         static string serverUrl = string.Empty;
-        List<Thread> threads = new List<Thread>();
-        Thread[] array = new Thread[5];
+        //List<Thread> threads = new List<Thread>();
+        //Thread[] array = new Thread[5];
         int i=0;
         public MainWindow()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             Loaded += MainWindow_Loaded;
+            //toggleExpanderCollasp
+            //portExpander.Expanded += new RoutedEventHandler(toggleExpanderCollasp);
+            //delivExpander.Expanded += new RoutedEventHandler(toggleExpanderCollasp);   
+        }
+
+        private void toggleExpanderCollasp(object sender, RoutedEventArgs args)
+        {
+            //Do something when the Expander control collapses
+            var senderExpnd = ((System.Windows.Controls.HeaderedContentControl)(sender)).Header.ToString().Contains("Deliv") ? "DelivExpander": "PortExpander";
+            switch (senderExpnd) {
+                case "DelivExpander": if (portExpander != null) portExpander.IsExpanded = false;
+                    break;
+                case "PortExpander": if (delivExpander!=null) delivExpander.IsExpanded = false;
+                    break;
+            }
+            
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -93,6 +109,7 @@ namespace KovairRallyWPFApp
                             mandFldLbl.Visibility = System.Windows.Visibility.Visible;
                             mandFldLbl.Content = "Invalid rally configuration!";
                         }
+                        clrallBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         saveConfigBtn.Background = Brushes.Silver;
                         saveConfigBtn.Foreground = Brushes.Black;
                         saveConfigBtn.Content = "Save Configuration";
@@ -227,6 +244,8 @@ namespace KovairRallyWPFApp
                         Task task3 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/theme", projectId));
                         Task task4 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/initiative", projectId));
                         Task task5 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/feature", projectId));
+                        Task task6 = Task.Factory.StartNew(() => startNewThread("Defects", projectId));
+                        Task task7 = Task.Factory.StartNew(() => startNewThread("TestCases", projectId));
 
                         getallBtn.Content = "Processing...";
                         getallBtn.Background = Brushes.Green;
@@ -236,14 +255,16 @@ namespace KovairRallyWPFApp
                         themeLbl.Content = "";
                         initiativeLbl.Content = "";
                         featuresLbl.Content = "";
+                        Task taskForProjectName = Task.Factory.StartNew(() => GetProjectName(projectId));
 
                         getStoryBtn.IsEnabled = false;
                         getTaskBtn.IsEnabled = false;
                         getThemeBtn.IsEnabled = false;
                         getInitiativeBtn.IsEnabled = false;
                         getFeaturesBtn.IsEnabled = false;
+                        getDefectBtn.IsEnabled = false;
+                        getTCaseBtn.IsEnabled = false;
                         clrallBtn.IsEnabled = false;
-
                         validatnLbl.Visibility = System.Windows.Visibility.Hidden;
                         validatnLbl.Content = "";
                         //Task.WaitAll(task1, task2, task3, task4, task5);
@@ -295,8 +316,12 @@ namespace KovairRallyWPFApp
                                            break;
                                        case "PortfolioItem/feature": featuresLbl.Content = count;
                                            break;
+                                       case "Defects": defectLbl.Content = count;
+                                           break;
+                                       case "TestCases": tcaseLbl.Content = count;
+                                           break;
                                    }
-                                   if (i == 5)
+                                   if (i == 7)
                                    {
                                        getallBtn.Content = "Get All Artifacts Count";
                                        getallBtn.Background = Brushes.Red;
@@ -307,13 +332,15 @@ namespace KovairRallyWPFApp
                                        getInitiativeBtn.IsEnabled = true;
                                        getFeaturesBtn.IsEnabled = true;
                                        clrallBtn.IsEnabled = true;
+                                       getDefectBtn.IsEnabled = true;
+                                       getTCaseBtn.IsEnabled = true;
                                    }
                                    
 
                                };
                                Dispatcher.BeginInvoke(action);
                            });
-            threads.Add(thread);
+            //threads.Add(thread);
             thread.Start();
             
             
@@ -346,7 +373,7 @@ namespace KovairRallyWPFApp
                         themeLbl.Content = count;
                         getThemeBtn.Background = Brushes.Silver;
                         getThemeBtn.Foreground = Brushes.Black;
-                        getThemeBtn.Content = "Get Theme count";
+                        getThemeBtn.Content = "Get Theme";
 
                     };
                     Dispatcher.BeginInvoke(action);
@@ -357,15 +384,15 @@ namespace KovairRallyWPFApp
             getThemeBtn.Background = Brushes.Green;
             getThemeBtn.Foreground = Brushes.White;
             themeLbl.Content = "";
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
 
         }
 
         private void getInitiativeBtn_Click(object sender, RoutedEventArgs e)
         {
             string projectId = prjctidTxt.Text;
-
             int count = 0;
-            //string projectId = prjctidTxt.Text;
             Thread thread = new Thread(() =>
             {
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -382,7 +409,7 @@ namespace KovairRallyWPFApp
                         initiativeLbl.Content = count;
                         getInitiativeBtn.Background = Brushes.Silver;
                         getInitiativeBtn.Foreground = Brushes.Black;
-                        getInitiativeBtn.Content = "Get Initiative count";
+                        getInitiativeBtn.Content = "Get Initiative";
 
                     };
                     Dispatcher.BeginInvoke(action);
@@ -393,7 +420,8 @@ namespace KovairRallyWPFApp
             getInitiativeBtn.Background = Brushes.Green;
             getInitiativeBtn.Foreground = Brushes.White;
             initiativeLbl.Content = "";
-
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
         }
 
         private void getFeaturesBtn_Click(object sender, RoutedEventArgs e)
@@ -418,7 +446,7 @@ namespace KovairRallyWPFApp
                         featuresLbl.Content = count;
                         getFeaturesBtn.Background = Brushes.Silver;
                         getFeaturesBtn.Foreground = Brushes.Black;
-                        getFeaturesBtn.Content = "Get Feature count";
+                        getFeaturesBtn.Content = "Get Feature";
 
                     };
                     Dispatcher.BeginInvoke(action);
@@ -429,7 +457,8 @@ namespace KovairRallyWPFApp
             getFeaturesBtn.Background = Brushes.Green;
             getFeaturesBtn.Foreground = Brushes.White;
             featuresLbl.Content = "";
-
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
         }
 
         #endregion Portfolio Artifacts
@@ -453,7 +482,7 @@ namespace KovairRallyWPFApp
                     count = GetArtifactCount(projectId, "Tasks"); //Task
                     Action action = () =>
                     {
-                        getTaskBtn.Content = "Get Task count";
+                        getTaskBtn.Content = "Get Task";
                         getTaskBtn.Background = Brushes.Silver;
                         getTaskBtn.Foreground = Brushes.Black;
                         taskLbl.Content = count;
@@ -466,7 +495,8 @@ namespace KovairRallyWPFApp
             getTaskBtn.Background = Brushes.Green;
             getTaskBtn.Content = "Processing...";
             taskLbl.Content = "";
-
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
 
         }
 
@@ -497,7 +527,7 @@ namespace KovairRallyWPFApp
                         storyLbl.Content = count;
                         getStoryBtn.Background = Brushes.Silver;
                         getStoryBtn.Foreground = Brushes.Black;
-                        getStoryBtn.Content = "Get Story count";
+                        getStoryBtn.Content = "Get Story";
                     };
                     Dispatcher.BeginInvoke(action);
                 }
@@ -507,6 +537,8 @@ namespace KovairRallyWPFApp
             getStoryBtn.Background = Brushes.Green;
             getStoryBtn.Foreground = Brushes.White;
             storyLbl.Content = "";
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
 
             //getStoryBtn.Content = FindResource("Play");
             //Thread thread = new Thread(() => { count = GetArtifactCount(prjctidTxt.Text, "HierarchicalRequirement"); });
@@ -517,27 +549,126 @@ namespace KovairRallyWPFApp
             //processing endss
         }
 
+        private void getDefectBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int count = 0;
+            string projectId = prjctidTxt.Text;
+            Thread thread = new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    //MessageBox.Show("Invalid Rally Configuration!");
+                    validatnLbl.Visibility = System.Windows.Visibility.Hidden;
+                    validatnLbl.Content = "";
+                }));
+                if (DoConnection(projectId))
+                {
+                    count = GetArtifactCount(projectId, "Defects");
+                    Action action = () =>
+                    {
+                        defectLbl.Content = count;
+                        getDefectBtn.Background = Brushes.Silver;
+                        getDefectBtn.Foreground = Brushes.Black;
+                        getDefectBtn.Content = "Get Defect";
+                    };
+                    Dispatcher.BeginInvoke(action);
+                }
+            });
+            thread.Start();
+            getDefectBtn.Content = "Processing...";
+            getDefectBtn.Background = Brushes.Green;
+            getDefectBtn.Foreground = Brushes.White;
+            defectLbl.Content = "";
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
+        }
+
+        private void getTCaseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int count = 0;
+            string projectId = prjctidTxt.Text;
+            Thread thread = new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    //MessageBox.Show("Invalid Rally Configuration!");
+                    validatnLbl.Visibility = System.Windows.Visibility.Hidden;
+                    validatnLbl.Content = "";
+                }));
+                if (DoConnection(projectId))
+                {
+                    count = GetArtifactCount(projectId, "TestCases");
+                    Action action = () =>
+                    {
+                        tcaseLbl.Content = count;
+                        getTCaseBtn.Background = Brushes.Silver;
+                        getTCaseBtn.Foreground = Brushes.Black;
+                        getTCaseBtn.Content = "Get Test Case";
+                    };
+                    Dispatcher.BeginInvoke(action);
+                }
+            });
+            thread.Start();
+            getTCaseBtn.Content = "Processing...";
+            getTCaseBtn.Background = Brushes.Green;
+            getTCaseBtn.Foreground = Brushes.White;
+            tcaseLbl.Content = "";
+            Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            taskForProjectName.Start();
+        }
+
         #endregion Individual Artifacts counts
 
         private int GetArtifactCount(string projectId, string artifactName)
         {
-            lock (this)
+            try
             {
-                i = i + 1;
-                request = new Request(artifactName);
-                request.Project = String.Format("/project/{0}", projectId);
-                request.Fetch = new List<string>() { "FormattedID", "Name","Project" };
-
-                //request.Fetch = new List<string>() { "Project" };
-                //var query = restApi.Query(request);
-                //var qeryres = query.Results.FirstOrDefault();
-                //var prjctn = (qeryres.Fields);//.dictionary)).Items[6].Value)))).Items[5].Value;
-                //Dictionary<string, object>.KeyCollection proj = prjctn;
-                ////prjctn = prjctn["_refObjectName"];
-
-                return restApi.Query(request) != null ? restApi.Query(request).TotalResultCount : 0;
+                lock (this)
+                {
+                    i = i + 1;
+                    request = new Request(artifactName);
+                    request.Project = String.Format("/project/{0}", projectId);
+                    request.Fetch = new List<string>() { "FormattedID", "Name", "Project" };
+                    return restApi.Query(request) != null ? restApi.Query(request).TotalResultCount : 0;
+                }
             }
+            catch (Exception ex) 
+            {
+                return 0;
+            }
+            
 
+        }
+
+        private void GetProjectName(string projectId)
+        {
+            try
+            {
+                lock (this)
+                {
+                    if (!String.IsNullOrEmpty(projectId))
+                    {
+                        request = new Request("Projects");
+                        request.Fetch = new List<string>() { "Name" };
+                        var query = restApi.Query(request);
+                        foreach (var result in query.Results)
+                        {
+                            string referUrl = result["_ref"].ToString();
+                            if (referUrl.Contains(projectId))
+                            {
+                                Action action =  new Action ( () => prjctName.Content = result["Name"]);
+                                Dispatcher.BeginInvoke(action);
+                                break;
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            { 
+
+            }
         }
 
         private bool DoConnection(string projectId)
@@ -588,6 +719,9 @@ namespace KovairRallyWPFApp
             initiativeLbl.Content = "";
             featuresLbl.Content = "";
             prjctidTxt.Text = "";
+            prjctName.Content = "";
+            defectLbl.Content = "";
+            tcaseLbl.Content = "";
         }
 
 

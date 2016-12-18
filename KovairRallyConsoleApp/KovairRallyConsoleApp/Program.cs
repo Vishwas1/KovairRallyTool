@@ -70,7 +70,7 @@ namespace KovairRallyConsoleApp
                 //                     Task<int>.Factory.StartNew(() => GetArtifactCount("56479390676",artifacts[2])) };
 
 
-                Task<int>[] taskArray = { Task<int>.Factory.StartNew(() => GetArtifactCount("28249260968", artifacts[1])) };
+                Task<int>[] taskArray = { Task<int>.Factory.StartNew(() => GetArtifactCount("28249260968", artifacts[4])) };
                 Task.WaitAll(taskArray);
                 var results = new Int32[taskArray.Length];
 
@@ -96,14 +96,27 @@ namespace KovairRallyConsoleApp
         {
             if (!String.IsNullOrEmpty(projectId) && !String.IsNullOrEmpty(artifactName))
             {
-                request = new Request(artifactName);
+                request = new Request("Projects");
                 request.Project = String.Format("/project/{0}", projectId);
-                request.Fetch =  new List<string>() { "FormattedID", "Name" ,"Project"};
-                var query = restApi.Query(request).Results.FirstOrDefault();
-                var project = query["Project"];
-                var projectname = project["Name"];
-                Console.WriteLine("Name of project is::  {0}", projectname);
-
+                request.Fetch =  new List<string>() { "Name" };
+                var query = restApi.Query(request).Results;
+               // var dd = query.AsEnumerable().Any(o => o.Fields["_ref"].ToString().indexOf(projectId)>0);
+                //var rr = query.Any(o => o["_ref"].ToString().contains(projectId));
+                //var project = query["Project"];
+                //var projectname = project["Name"];
+                //Console.WriteLine("Name of project is::  {0}", projectname);
+                foreach (var result in query)
+                {
+                    //Request projectsRequest = new Request(result["Projects"]);
+                    var referUrl = result["_ref"].ToString();
+                    if (referUrl.Contains(projectId))
+                    {
+                        var projectname = result["Name"];
+                        Console.WriteLine("Name of project is::  {0}", projectname);
+                        break;
+                    }
+                        
+                }
                 return restApi.Query(request) != null ? restApi.Query(request).TotalResultCount : 0;
             }
             else
