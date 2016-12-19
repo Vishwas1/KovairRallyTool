@@ -18,6 +18,7 @@ using System.Xml.Linq;
 using Rally.RestApi;
 using Rally.RestApi.Response;
 using System.Threading;
+using log4net;
 
 
 namespace KovairRallyWPFApp
@@ -32,21 +33,32 @@ namespace KovairRallyWPFApp
         static string username = string.Empty;
         static string password = string.Empty;
         static string serverUrl = string.Empty;
+        private static readonly ILog logger = LogManager.GetLogger("logger");
         //List<Thread> threads = new List<Thread>();
         //Thread[] array = new Thread[5];
         int i=0;
         public MainWindow()
         {
+            
+            //FileInfo fi = new FileInfo("log4net.xml");
+            //log4net.Config.XmlConfigurator.Configure(fi);
+            //log4net.GlobalContext.Properties["host"] = Environment.MachineName;
+            log4net.Config.XmlConfigurator.Configure();
+            logger.Debug("MainWindow:: Starts...");
+            logger.Debug("MainWindow:: Before InitializeComponent.");
             InitializeComponent();
+            logger.Debug("MainWindow:: After InitializeComponent.");
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             Loaded += MainWindow_Loaded;
             //toggleExpanderCollasp
             //portExpander.Expanded += new RoutedEventHandler(toggleExpanderCollasp);
-            //delivExpander.Expanded += new RoutedEventHandler(toggleExpanderCollasp);   
+            //delivExpander.Expanded += new RoutedEventHandler(toggleExpanderCollasp);  
+            logger.Debug("MainWindow:: Ends.");
         }
 
         private void toggleExpanderCollasp(object sender, RoutedEventArgs args)
         {
+            logger.Debug("toggleExpanderCollasp:: Starts...");
             //Do something when the Expander control collapses
             var senderExpnd = ((System.Windows.Controls.HeaderedContentControl)(sender)).Header.ToString().Contains("Deliv") ? "DelivExpander": "PortExpander";
             switch (senderExpnd) {
@@ -55,59 +67,80 @@ namespace KovairRallyWPFApp
                 case "PortExpander": if (delivExpander!=null) delivExpander.IsExpanded = false;
                     break;
             }
+            logger.Debug("toggleExpanderCollasp:: Ends.");
             
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            logger.Debug("MainWindow_Loaded:: Starts...");
             restApi = new RallyRestApi();
             if (File.Exists("RallyConfig.xml"))
             {
+                logger.Debug("MainWindow_Loaded:: RallyConfig.xml exists");
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load("RallyConfig.xml");
+                logger.Debug("MainWindow_Loaded::After loading RallyConfig.xml");
                 XmlNodeList nodeList = xmlDoc.DocumentElement.SelectNodes("/root");
 
                 serverUrl = urlTxt.Text = nodeList[0].ChildNodes[0].InnerText;
                 username = unameTxt.Text = nodeList[0].ChildNodes[1].InnerText;
                 password = pwdTxt.Password = nodeList[0].ChildNodes[2].InnerText;
+                logger.DebugFormat("MainWindow_Loaded::serverUrl ={0}", serverUrl);
+                logger.DebugFormat("MainWindow_Loaded::username ={0}", username);
+                logger.DebugFormat("MainWindow_Loaded::password ={0}", password);
             }
             else
             {
+                logger.Debug("MainWindow_Loaded:: RallyConfig.xml does not exists");
                 urlTxt.Text = "";
                 unameTxt.Text = "";
                 pwdTxt.Password = "";
             }
+            logger.Debug("MainWindow_Loaded:: Ends.");
         }
 
         private void saveConfigBtn_Click(object sender, RoutedEventArgs e)
         {
+            logger.DebugFormat("saveConfigBtn_Click:: Starts...");
             if (!String.IsNullOrEmpty(urlTxt.Text) && !String.IsNullOrEmpty(unameTxt.Text) && !String.IsNullOrEmpty(pwdTxt.Password))
             {
+                logger.DebugFormat("saveConfigBtn_Click:: Inside if");
                 username = unameTxt.Text;
                 password = pwdTxt.Password;
                 serverUrl = urlTxt.Text;
+
+                logger.DebugFormat("saveConfigBtn_Click:: New thread configured");
                 Thread thread = new Thread(() =>
                 {
                     bool isConfigCorrect = false;
+                    logger.DebugFormat("saveConfigBtn_Click:: Inside IF : Before calling restApi.Authenticate().");
                     isConfigCorrect = restApi.Authenticate(username, password, serverUrl, proxy: null, allowSSO: false).Equals(RallyRestApi.AuthenticationResult.Authenticated);
+                    logger.DebugFormat("saveConfigBtn_Click:: Inside IF : After calling restApi.Authenticate()");
                     Action action = () =>
                     {
                         if (isConfigCorrect)
                         {
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside IF : isConfigCorrect = {0}", isConfigCorrect);
                             if (File.Exists("RallyConfig.xml"))
                                 File.Delete("RallyConfig.xml");
 
                             string rallyConfigXml = "<root><url>" + serverUrl + "</url><username>" + username + "</username><password>" + password + "</password></root>";
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside IF : rallyConfigXml ={0}", rallyConfigXml);
                             XmlDocument doc = new XmlDocument();
                             doc.LoadXml(rallyConfigXml);
                             doc.Save("RallyConfig.xml");
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside IF :After saving rallyConfigXml into  RallyConfig.xml");
                             mandFldLbl.Visibility = System.Windows.Visibility.Visible;
                             mandFldLbl.Content = "Configuration is successfully saved!";
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside IF :Configuration is successfully saved!");
                         }
                         else
                         {
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside Else : isConfigCorrect = {0}", isConfigCorrect);
                             mandFldLbl.Visibility = System.Windows.Visibility.Visible;
                             mandFldLbl.Content = "Invalid rally configuration!";
+                            logger.DebugFormat("saveConfigBtn_Click:: Inside Else :Invalid rally configuration!!");
                         }
                         clrallBtn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         saveConfigBtn.Background = Brushes.Silver;
@@ -119,6 +152,7 @@ namespace KovairRallyWPFApp
 
                 });
                 thread.Start();
+                logger.DebugFormat("saveConfigBtn_Click:: New thread starts");
                 saveConfigBtn.Content = "Processing...";
                 saveConfigBtn.Background = Brushes.Green;
                 saveConfigBtn.Foreground = Brushes.White;
@@ -127,9 +161,11 @@ namespace KovairRallyWPFApp
             }
             else
             {
+                logger.DebugFormat("saveConfigBtn_Click:: Inside else");
                 mandFldLbl.Visibility = System.Windows.Visibility.Visible;
                 mandFldLbl.Content = "*All fields are mandatory.";
             }
+            logger.DebugFormat("saveConfigBtn_Click:: Ends.");
         }
 
         private void clearBtn_Click(object sender, RoutedEventArgs e)
@@ -254,6 +290,8 @@ namespace KovairRallyWPFApp
                         storyLbl.Content = "";
                         themeLbl.Content = "";
                         initiativeLbl.Content = "";
+                        defectLbl.Content = "";
+                        tcaseLbl.Content = "";
                         featuresLbl.Content = "";
                         Task taskForProjectName = Task.Factory.StartNew(() => GetProjectName(projectId));
 
@@ -371,13 +409,18 @@ namespace KovairRallyWPFApp
                     Action action = () =>
                     {
                         themeLbl.Content = count;
-                        getThemeBtn.Background = Brushes.Silver;
-                        getThemeBtn.Foreground = Brushes.Black;
-                        getThemeBtn.Content = "Get Theme";
-
+                        
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+                Action action1 = () =>
+                {
+                    getThemeBtn.Background = Brushes.Silver;
+                    getThemeBtn.Foreground = Brushes.Black;
+                    getThemeBtn.Content = "Get Theme";
+
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getThemeBtn.Content = "Processing...";
@@ -407,13 +450,18 @@ namespace KovairRallyWPFApp
                     Action action = () =>
                     {
                         initiativeLbl.Content = count;
-                        getInitiativeBtn.Background = Brushes.Silver;
-                        getInitiativeBtn.Foreground = Brushes.Black;
-                        getInitiativeBtn.Content = "Get Initiative";
-
+                        
                     };
                     Dispatcher.BeginInvoke(action);
-                }
+                } 
+                Action action1 = () =>
+                {
+                    getInitiativeBtn.Background = Brushes.Silver;
+                    getInitiativeBtn.Foreground = Brushes.Black;
+                    getInitiativeBtn.Content = "Get Initiative";
+
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getInitiativeBtn.Content = "Processing...";
@@ -444,13 +492,19 @@ namespace KovairRallyWPFApp
                     Action action = () =>
                     {
                         featuresLbl.Content = count;
-                        getFeaturesBtn.Background = Brushes.Silver;
-                        getFeaturesBtn.Foreground = Brushes.Black;
-                        getFeaturesBtn.Content = "Get Feature";
-
+                        
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+                Action action1 = () =>
+                {
+                    
+                    getFeaturesBtn.Background = Brushes.Silver;
+                    getFeaturesBtn.Foreground = Brushes.Black;
+                    getFeaturesBtn.Content = "Get Feature";
+
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getFeaturesBtn.Content = "Processing...";
@@ -482,13 +536,18 @@ namespace KovairRallyWPFApp
                     count = GetArtifactCount(projectId, "Tasks"); //Task
                     Action action = () =>
                     {
-                        getTaskBtn.Content = "Get Task";
-                        getTaskBtn.Background = Brushes.Silver;
-                        getTaskBtn.Foreground = Brushes.Black;
                         taskLbl.Content = count;
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+                Action action1 = () =>
+                {
+                    getTaskBtn.Content = "Get Task";
+                    getTaskBtn.Background = Brushes.Silver;
+                    getTaskBtn.Foreground = Brushes.Black;
+                    //taskLbl.Content = count;
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getTaskBtn.Foreground = Brushes.White;
@@ -525,12 +584,18 @@ namespace KovairRallyWPFApp
                     Action action = () =>
                     {
                         storyLbl.Content = count;
-                        getStoryBtn.Background = Brushes.Silver;
-                        getStoryBtn.Foreground = Brushes.Black;
-                        getStoryBtn.Content = "Get Story";
+                        
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+
+                Action action1 = () =>
+                {
+                    getStoryBtn.Background = Brushes.Silver;
+                    getStoryBtn.Foreground = Brushes.Black;
+                    getStoryBtn.Content = "Get Story";
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getStoryBtn.Content = "Processing...";
@@ -573,6 +638,14 @@ namespace KovairRallyWPFApp
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+                Action action1 = () =>
+                {
+                    
+                    getDefectBtn.Background = Brushes.Silver;
+                    getDefectBtn.Foreground = Brushes.Black;
+                    getDefectBtn.Content = "Get Defect";
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getDefectBtn.Content = "Processing...";
@@ -601,12 +674,17 @@ namespace KovairRallyWPFApp
                     Action action = () =>
                     {
                         tcaseLbl.Content = count;
-                        getTCaseBtn.Background = Brushes.Silver;
-                        getTCaseBtn.Foreground = Brushes.Black;
-                        getTCaseBtn.Content = "Get Test Case";
+                        
                     };
                     Dispatcher.BeginInvoke(action);
                 }
+                Action action1 = () =>
+                {
+                    getTCaseBtn.Background = Brushes.Silver;
+                    getTCaseBtn.Foreground = Brushes.Black;
+                    getTCaseBtn.Content = "Get Test Case";
+                };
+                Dispatcher.BeginInvoke(action1);
             });
             thread.Start();
             getTCaseBtn.Content = "Processing...";
@@ -673,42 +751,53 @@ namespace KovairRallyWPFApp
 
         private bool DoConnection(string projectId)
         {
-            // Initialize the REST API. You can specify a web service version if needed in the constructor.
+            
             bool isAuthencate = false;
-            //Dispatcher.BeginInvoke(new Action(() =>
-            //{
-            //string projectid = prjctidTxt.Text;
-            if (!String.IsNullOrEmpty(projectId))
+            try
             {
-                //restApi = new RallyRestApi();
-                if (restApi.Authenticate(username, password, serverUrl, proxy: null, allowSSO: false).Equals(RallyRestApi.AuthenticationResult.Authenticated))
+                logger.DebugFormat("DoConnection:: Starts ...");
+                if (!String.IsNullOrEmpty(projectId))
                 {
-                    isAuthencate = true;
+                    logger.DebugFormat("DoConnection:: Inside if projectId = {0}", projectId);
+                    if (restApi.Authenticate(username, password, serverUrl, proxy: null, allowSSO: false).Equals(RallyRestApi.AuthenticationResult.Authenticated))
+                    {
+                        logger.DebugFormat("DoConnection:: Inside if: Inside id. After calling  Authenticate");
+                        isAuthencate = true;
+                    }
+                    else
+                    {
+                        logger.DebugFormat("DoConnection:: Inside if: Inside else. After calling  Authenticate");
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            //MessageBox.Show("Invalid Rally Configuration!");
+                            validatnLbl.Visibility = System.Windows.Visibility.Visible;
+                            validatnLbl.Content = "Invalid Rally Configuration!";
+                        }));
+                        isAuthencate = false;
+                    }
                 }
                 else
                 {
+                    logger.DebugFormat("DoConnection:: Inside else");
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        //MessageBox.Show("Invalid Rally Configuration!");
                         validatnLbl.Visibility = System.Windows.Visibility.Visible;
-                        validatnLbl.Content = "Invalid Rally Configuration!";
+                        validatnLbl.Content = "Please enter Rally ProjectId!";
                     }));
                     isAuthencate = false;
                 }
-
+                logger.DebugFormat("DoConnection:: Ends.");
+                return isAuthencate;
             }
-            else
+            catch (Exception ex)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    //MessageBox.Show("Please enter Rally ProjectId!");
-                    validatnLbl.Visibility = System.Windows.Visibility.Visible;
-                    validatnLbl.Content = "Please enter Rally ProjectId!";
-                }));
-                isAuthencate = false;
+                return isAuthencate;
             }
-            //}));
-            return isAuthencate;
+            finally 
+            {
+                logger.DebugFormat("DoConnection:: Returning isAuthencate = {0}.", isAuthencate);
+                logger.DebugFormat("DoConnection:: Ends.");
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

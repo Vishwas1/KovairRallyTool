@@ -27,7 +27,7 @@
             </TabItem.HeaderTemplate>
             <TabItem.Content>
                 <TextBlock TextWrapping="WrapWithOverflow">
-                    <Grid Height="351" Width="420">
+                   <Grid Height="359" Width="420">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="44"></RowDefinition>
                             <RowDefinition Height="44"></RowDefinition>
@@ -161,7 +161,7 @@
                                                     </GroupBox>
                                              </Grid>
                          		         </Expander>
-                         		        <Expander Name="delivExpander" Header="Delivery Items (Story/Task/Defect/Test Case/)" Expanded="toggleExpanderCollasp" Grid.Column="0"  Grid.Row="1" IsExpanded="false">
+                         		        <Expander Name="delivExpander" Header="Delivery Items (Story/Task/Defect/Test Case)" Expanded="toggleExpanderCollasp" Grid.Column="0"  Grid.Row="1" IsExpanded="false">
                          			        <Grid Background="WhiteSmoke" Height="115"  Margin="20,0,-0.4,0" Width="364">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"/>

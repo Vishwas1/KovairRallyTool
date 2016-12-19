@@ -1,7 +1,9 @@
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\KovairRallyWPFApp.exe.config
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\KovairRallyWPFApp.exe
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\KovairRallyWPFApp.pdb
-C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.csprojResolveAssemblyReference.cache
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\log4net.dll
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\Rally.RestApi.dll
+C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\log4net.xml
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\MainWindow.baml
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\MainWindow.g.cs
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\App.g.cs
@@ -11,4 +13,3 @@ C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyW
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.csproj.GenerateResource.Cache
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.exe
 C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\obj\Debug\KovairRallyWPFApp.pdb
-C:\Users\Eaivpc\Desktop\RallyTool\KovairRallyTool\KovairRallyWPFApp\KovairRallyWPFApp\bin\Debug\Rally.RestApi.dll
