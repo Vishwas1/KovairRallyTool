@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "KovairRally1.0Setup", "KovairRally1.0Setup\KovairRally1.0Setup.isproj", "{AA279F85-901C-4F0F-A98A-F701E77FDD05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Default = CD_ROM|Default
+		DVD-5|Default = DVD-5|Default
+		SingleImage|Default = SingleImage|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.CD_ROM|Default.ActiveCfg = CD_ROM
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.CD_ROM|Default.Build.0 = CD_ROM
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.DVD-5|Default.ActiveCfg = DVD-5
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.DVD-5|Default.Build.0 = DVD-5
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.SingleImage|Default.ActiveCfg = SingleImage
+		{AA279F85-901C-4F0F-A98A-F701E77FDD05}.SingleImage|Default.Build.0 = SingleImage
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

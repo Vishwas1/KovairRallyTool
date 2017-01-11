@@ -1,0 +1,9 @@
+DEBUG 2016-12-19 20:57:10,152 logger..ctor              - MainWindow:: Starts...
+DEBUG 2016-12-19 20:57:10,173 logger..ctor              - MainWindow:: Before InitializeComponent.
+DEBUG 2016-12-19 20:57:10,229 logger.toggleExpanderCollasp - toggleExpanderCollasp:: Starts...
+DEBUG 2016-12-19 20:57:10,237 logger.toggleExpanderCollasp - toggleExpanderCollasp:: Ends.
+DEBUG 2016-12-19 20:57:10,248 logger..ctor              - MainWindow:: After InitializeComponent.
+DEBUG 2016-12-19 20:57:10,252 logger..ctor              - MainWindow:: Ends.
+DEBUG 2016-12-19 20:57:10,344 logger.MainWindow_Loaded  - MainWindow_Loaded:: Starts...
+DEBUG 2016-12-19 20:57:10,386 logger.MainWindow_Loaded  - MainWindow_Loaded:: RallyConfig.xml does not exists
+DEBUG 2016-12-19 20:57:10,391 logger.MainWindow_Loaded  - MainWindow_Loaded:: Ends.

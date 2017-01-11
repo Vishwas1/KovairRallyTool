@@ -114,7 +114,7 @@ namespace KovairRallyWPFApp
                 Thread thread = new Thread(() =>
                 {
                     bool isConfigCorrect = false;
-                    logger.DebugFormat("saveConfigBtn_Click:: Inside IF : Before calling restApi.Authenticate().");
+                    logger.DebugFormat("saveConfigBtn_Click:: Inside IF : Before calling restApi.Authenticate(). username = {0}, password = {1}, serverUrl= {2}",username,password,serverUrl);
                     isConfigCorrect = restApi.Authenticate(username, password, serverUrl, proxy: null, allowSSO: false).Equals(RallyRestApi.AuthenticationResult.Authenticated);
                     logger.DebugFormat("saveConfigBtn_Click:: Inside IF : After calling restApi.Authenticate()");
                     Action action = () =>
@@ -267,22 +267,40 @@ namespace KovairRallyWPFApp
 
         private void getallBtn_Click(object sender, RoutedEventArgs e)
         {
+            logger.DebugFormat("getallBtn_Click:: Starts...");
             MessageBoxResult result = MessageBox.Show("Fetching all artifacts count is a long running process. It may take some time. Do you wish to continue?", "KovairRally", MessageBoxButton.OKCancel, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.OK:
+                    logger.DebugFormat("getallBtn_Click:: Inside Case MessageBoxResult.OK:: Starts...");
                     string projectId = prjctidTxt.Text;
                     i = 0;
+                    logger.DebugFormat("getallBtn_Click:: Before calling DoConnection :: projectId={0}",projectId);
                     if (DoConnection(projectId))
                     {
+                        logger.DebugFormat("getallBtn_Click:: After calling DoConnection :: projectId={0}", projectId);
+                        
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=Task");
                         Task task1 = Task.Factory.StartNew(() => startNewThread("Tasks", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=Task");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=HierarchicalRequirement");
                         Task task2 = Task.Factory.StartNew(() => startNewThread("HierarchicalRequirement", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=HierarchicalRequirement");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=PortfolioItem/theme");
                         Task task3 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/theme", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=PortfolioItem/theme");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=PortfolioItem/initiative");
                         Task task4 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/initiative", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=PortfolioItem/initiative");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=PortfolioItem/feature");
                         Task task5 = Task.Factory.StartNew(() => startNewThread("PortfolioItem/feature", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=PortfolioItem/feature");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=Defects");
                         Task task6 = Task.Factory.StartNew(() => startNewThread("Defects", projectId));
+                        logger.DebugFormat("getallBtn_Click:: After calling startNewThread :: artifact=Defects");
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=TestCases");
                         Task task7 = Task.Factory.StartNew(() => startNewThread("TestCases", projectId));
-
+                        logger.DebugFormat("getallBtn_Click:: Before calling startNewThread :: artifact=TestCases");
                         getallBtn.Content = "Processing...";
                         getallBtn.Background = Brushes.Green;
                         getallBtn.Foreground = Brushes.White;
@@ -323,44 +341,73 @@ namespace KovairRallyWPFApp
                         //getFeaturesBtn.IsEnabled = true;
                         //clrallBtn.IsEnabled = true;
                     }
-
+                    logger.DebugFormat("getallBtn_Click::  Case MessageBoxResult.OK:: End...");
                     break;
+
                 case MessageBoxResult.Cancel:
+                        logger.DebugFormat("getallBtn_Click:: Inside Case MessageBoxResult.Cancel:: Starts...");
                     return;
+
 
             }
 
-
+            logger.DebugFormat("getallBtn_Click:: End...");
         }
 
         private void startNewThread(string artifact, string projectId)
         {
+            logger.DebugFormat("startNewThread:: Starts...");
             int count = 0;
+            logger.DebugFormat("Before create object:: thread");
             Thread thread = new Thread(() =>
                            {
-                               
+                               logger.DebugFormat("GetArtifactCount:: Before calling...::projectId={0}" + projectId + "::artifact={1}" + artifact);
                                count = GetArtifactCount(projectId, artifact);
+                               logger.DebugFormat("GetArtifactCount:: After Calling...::count={0}"+count);
                                Action action = () =>
-                               {
+                               {                             
                                    switch (artifact)
                                    {
-                                       case "Tasks": taskLbl.Content = count;
+                                       case "Tasks":
+                                           logger.DebugFormat("startNewThread:: Inside Case...artifact=Task");
+                                           taskLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case...artifact=Task");                                        
                                            break;
-                                       case "HierarchicalRequirement": storyLbl.Content = count;
+                                       case "HierarchicalRequirement":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=HierarchicalRequirement");
+                                           storyLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=HierarchicalRequirement");
                                            break;
-                                       case "PortfolioItem/theme": themeLbl.Content = count;
+                                       case "PortfolioItem/theme":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=PortfolioItem/theme");
+                                           themeLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=PortfolioItem/theme");
                                            break;
-                                       case "PortfolioItem/initiative": initiativeLbl.Content = count;
+                                       case "PortfolioItem/initiative":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=PortfolioItem/initiative");
+                                           initiativeLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=PortfolioItem/initiative");
                                            break;
-                                       case "PortfolioItem/feature": featuresLbl.Content = count;
+                                       case "PortfolioItem/feature":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=PortfolioItem/feature");
+                                           featuresLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=PortfolioItem/feature");
                                            break;
-                                       case "Defects": defectLbl.Content = count;
+                                       case "Defects":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=Defects");
+                                           defectLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=Defects");
                                            break;
-                                       case "TestCases": tcaseLbl.Content = count;
+                                       case "TestCases":
+                                           logger.DebugFormat("startNewThread:: Inside Case... artifact=TestCases");
+                                           tcaseLbl.Content = count;
+                                           logger.DebugFormat("startNewThread:: End Case... artifact=TestCases");
                                            break;
                                    }
+
                                    if (i == 7)
                                    {
+                                       logger.Debug("startNewThread:: Begin If i==7");
                                        getallBtn.Content = "Get All Artifacts Count";
                                        getallBtn.Background = Brushes.Red;
                                        getallBtn.Foreground = Brushes.White;
@@ -372,15 +419,17 @@ namespace KovairRallyWPFApp
                                        clrallBtn.IsEnabled = true;
                                        getDefectBtn.IsEnabled = true;
                                        getTCaseBtn.IsEnabled = true;
+                                       logger.Debug("startNewThread:: End If i==7");
                                    }
                                    
 
                                };
                                Dispatcher.BeginInvoke(action);
                            });
+            logger.DebugFormat("After create object:: thread");
             //threads.Add(thread);
             thread.Start();
-            
+            logger.DebugFormat("startNewThread:: End...");
             
         }
 
@@ -392,20 +441,25 @@ namespace KovairRallyWPFApp
 
         private void getThemeBtn_Click(object sender, RoutedEventArgs e)
         {
+            logger.DebugFormat("getThemeBtn_Click:: Starts");
             string projectId = prjctidTxt.Text;
 
             int count = 0;
             Thread thread = new Thread(() =>
             {
+                logger.DebugFormat("getThemeBtn_Click:: DoConnection Begin call with projectId={0}", projectId);
                 if (DoConnection(projectId))
                 {
+                    logger.DebugFormat("getThemeBtn_Click:: DoConnection End call with");
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         //MessageBox.Show("Invalid Rally Configuration!");
                         validatnLbl.Visibility = System.Windows.Visibility.Hidden;
                         validatnLbl.Content = "";
                     }));
+                    logger.DebugFormat("getThemeBtn_Click:: GetArtifactCountc Begin call with artifactName=PortfolioItem/theme");
                     count = GetArtifactCount(projectId, "PortfolioItem/theme");
+                    logger.DebugFormat("getThemeBtn_Click:: GetArtifactCountc End call count={0}",count);
                     Action action = () =>
                     {
                         themeLbl.Content = count;
@@ -427,13 +481,16 @@ namespace KovairRallyWPFApp
             getThemeBtn.Background = Brushes.Green;
             getThemeBtn.Foreground = Brushes.White;
             themeLbl.Content = "";
+            logger.DebugFormat("getThemeBtn_Click:: GetProjectName Begin call with projectId={0}", projectId);
             Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            logger.DebugFormat("getThemeBtn_Click:: GetProjectName End call taskForProjectName={0}", taskForProjectName);
             taskForProjectName.Start();
-
+            logger.DebugFormat("getThemeBtn_Click:: End");
         }
 
         private void getInitiativeBtn_Click(object sender, RoutedEventArgs e)
         {
+            logger.DebugFormat("getInitiativeBtn_Click:: Start");
             string projectId = prjctidTxt.Text;
             int count = 0;
             Thread thread = new Thread(() =>
@@ -444,9 +501,14 @@ namespace KovairRallyWPFApp
                     validatnLbl.Visibility = System.Windows.Visibility.Hidden;
                     validatnLbl.Content = "";
                 }));
+                logger.DebugFormat("getInitiativeBtn_Click:: DoConnection Before call with projectId={0}", projectId);
                 if (DoConnection(projectId))
                 {
+                    logger.DebugFormat("getInitiativeBtn_Click:: DoConnection End");
+                    logger.DebugFormat("getInitiativeBtn_Click:: GetArtifactCount Before call with artifactName= PortfolioItem/initiative");
                     count = GetArtifactCount(projectId, "PortfolioItem/initiative");
+
+                    logger.DebugFormat("getInitiativeBtn_Click:: GetArtifactCount After call count={0}", count);
                     Action action = () =>
                     {
                         initiativeLbl.Content = count;
@@ -468,14 +530,17 @@ namespace KovairRallyWPFApp
             getInitiativeBtn.Background = Brushes.Green;
             getInitiativeBtn.Foreground = Brushes.White;
             initiativeLbl.Content = "";
+            logger.DebugFormat("getInitiativeBtn_Click:: GetProjectName Before call with projectId={0}", projectId);
             Task taskForProjectName = new Task(() => GetProjectName(projectId));
+            logger.DebugFormat("getInitiativeBtn_Click:: GetProjectName End call taskForProjectName={0}", taskForProjectName);
             taskForProjectName.Start();
+            logger.DebugFormat("getInitiativeBtn_Click:: End");
         }
 
         private void getFeaturesBtn_Click(object sender, RoutedEventArgs e)
         {
+            logger.DebugFormat("getFeaturesBtn_Click:: Start..");
             string projectId = prjctidTxt.Text;
-
             int count = 0;
             //string projectId = prjctidTxt.Text;
             Thread thread = new Thread(() =>
@@ -513,6 +578,7 @@ namespace KovairRallyWPFApp
             featuresLbl.Content = "";
             Task taskForProjectName = new Task(() => GetProjectName(projectId));
             taskForProjectName.Start();
+            logger.DebugFormat("getFeaturesBtn_Click:: Ends..");
         }
 
         #endregion Portfolio Artifacts
@@ -786,7 +852,6 @@ namespace KovairRallyWPFApp
                     }));
                     isAuthencate = false;
                 }
-                logger.DebugFormat("DoConnection:: Ends.");
                 return isAuthencate;
             }
             catch (Exception ex)
